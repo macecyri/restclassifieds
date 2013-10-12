@@ -28,8 +28,19 @@ public class ClassifiedResource {
 
 	@GET
 	@Produces("application/json")
-	public List<Classified> getClassifieds() {
-		return artDao.getAllClassifieds();
+	public List<Classified> getClassifieds(@HeaderParam("tag") String tagsId) {
+		if (tagsId != null){
+			List<String> listTagsId = new ArrayList<String>(Arrays.asList(tagsId.replaceAll("\\s+","").split(",")));
+			List<Integer> listTagsIntegerId = new ArrayList<Integer>();
+			for (String tagId : listTagsId){
+				listTagsIntegerId.add(Integer.parseInt(tagId));
+			}
+			return artDao.getClassifieds(listTagsIntegerId);
+		}
+		else{
+			return artDao.getAllClassifieds();
+		}
+		
 	}
 
 	@POST
