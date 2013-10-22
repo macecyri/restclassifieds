@@ -26,13 +26,26 @@ public class Classified {
 
 	@Column(name = "Title")
 	private String title;
+	
+	@Column(name = "Description")
+	private String description;
 
 	@ManyToMany
 	@JoinTable(name = "Classified_Tag", joinColumns = { @JoinColumn(name = "Id_classified", referencedColumnName = "Id") }, inverseJoinColumns = { @JoinColumn(name = "Id_tag", referencedColumnName = "Id") })
-	private Set<Tag> relatedTags;	
+	private Set<Tag> relatedTags;
+	
+	@ManyToMany
+	@JoinTable(name = "Classified_Dep", joinColumns = { @JoinColumn(name = "Id_classified", referencedColumnName = "Id") }, inverseJoinColumns = { @JoinColumn(name = "Id_dep", referencedColumnName = "Id") })
+	private Set<Dep> relatedDeps;	
+	
+	@ManyToMany
+	@JoinTable(name = "Classified_Cal", joinColumns = { @JoinColumn(name = "Id_classified", referencedColumnName = "Id") }, inverseJoinColumns = { @JoinColumn(name = "Id_cal", referencedColumnName = "Id") })
+	private Set<Cal> relatedCals;	
 	
 	public Classified(){
 		relatedTags = new HashSet<Tag>();
+		relatedDeps = new HashSet<Dep>();
+		relatedCals = new HashSet<Cal>();
 	}
 	
 	

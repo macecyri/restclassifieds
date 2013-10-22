@@ -17,8 +17,10 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import artproject.dao.ArtDao;
+import artproject.model.Cal;
 import artproject.model.Classified;
 import artproject.model.ClassifiedSaveQuery;
+import artproject.model.Dep;
 import artproject.model.Tag;
 
 @Path("/classifieds")
@@ -48,12 +50,24 @@ public class ClassifiedResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void save(ClassifiedSaveQuery query) {
 	String title = query.getTitle();
+	String description = query.getDescription();
 	List<Integer>  relatedTags = query.getParameterTagIds();
+	List<Integer>  relatedDeps = query.getParameterDepIds();
+	List<Integer>  relatedCals = query.getParameterCalIds();
 	Classified classified = new Classified();
 		classified.setTitle(title);
+		classified.setDescription(description);
 		for (Integer tagId : relatedTags){
 			Tag tag = artDao.getTag(tagId);
 			classified.getRelatedTags().add(tag);
+		}
+		for (Integer depId : relatedDeps){
+			Dep dep = artDao.getDep(depId);
+			classified.getRelatedDeps().add(dep);
+		}
+		for (Integer calId : relatedCals){
+			Cal cal = artDao.getCal(calId);
+			classified.getRelatedCals().add(cal);
 		}
 		artDao.createClassified(classified);
 	}
