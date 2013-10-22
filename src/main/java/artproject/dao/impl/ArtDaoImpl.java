@@ -54,6 +54,14 @@ public class ArtDaoImpl implements ArtDao {
 	public Cal getCal(Integer calId) {
 		return (Cal) sessionFactory.getCurrentSession().get(Cal.class, calId);
 	}
+	
+	public Classified getClassified(Integer classifiedId) {
+		Classified classified =  (Classified) sessionFactory.getCurrentSession().get(Classified.class, classifiedId);
+		Hibernate.initialize(classified.getRelatedTags());
+		Hibernate.initialize(classified.getRelatedDeps());
+		Hibernate.initialize(classified.getRelatedCals());
+		return classified;
+	}
 
 	public void createTag(Tag tag) {
 		sessionFactory.getCurrentSession().save(tag);

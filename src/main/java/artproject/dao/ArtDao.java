@@ -16,6 +16,7 @@ public interface ArtDao {
 	public Tag getTag(Integer tagId);
 	public Dep getDep(Integer depId);
 	public Cal getCal(Integer calId);
+	public Classified getClassified(Integer classifiedId);
 	public List<Classified> getClassifieds(List<Integer> listTagsId);
 	public List<Classified> getAllClassifieds();
 	public void createClassified(Classified classified);
